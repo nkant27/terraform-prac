@@ -6,13 +6,17 @@ terraform {
     }
   }
 }
-
-# Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg1" {
-  name     = "rg1-resourcegroup"
-  location = "West Europe"
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "mystatefile-rg"
+    storage_account_name = "mystatefile"
+    container_name       = "preprodtfstate"
+    key                  = "preprod.terraform.tfstate"
+  }
 }
+
+
